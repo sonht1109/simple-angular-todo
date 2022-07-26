@@ -5,6 +5,6 @@ export interface FilterButton {
 
 export enum Filter {
   ALL = 'all',
-  ACTIVE = 'active',
-  INACTIVE = 'inactive',
+  COMPLETED = 'completed',
+  INCOMPLETED = 'incompleted',
 }

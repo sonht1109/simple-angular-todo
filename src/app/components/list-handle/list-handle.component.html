@@ -1,0 +1,25 @@
+<div
+  class="app-handle flex items-center text-gray-500 px-3 py-3 border-gray-400"
+>
+  <div class="handle__total">
+    {{ length }} {{ length > 1 ? "items" : "item" }}
+  </div>
+
+  <div class="handle__buttons flex-1 flex justify-center">
+    <button
+      *ngFor="let f of filters; index as i"
+      (click)="onFilter(f.type)"
+      [ngClass]="{
+        active: filter === f.type,
+        'border-gray-400': filter === f.type,
+        'text-sm': true
+      }"
+    >
+      {{ f.label }}
+    </button>
+  </div>
+
+  <div class="handle__clear">
+    <button class="text-red-400 border-red-400">Clear completed</button>
+  </div>
+</div>

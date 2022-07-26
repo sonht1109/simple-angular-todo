@@ -1,0 +1,7 @@
+<div class="app-list--wrapper border-gray-400">
+  <app-list-item
+    *ngFor="let todo of todos; last as isLast"
+    [todo]="todo"
+    [isLast]="isLast"
+  ></app-list-item>
+</div>
