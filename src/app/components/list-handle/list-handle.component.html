@@ -1,9 +1,7 @@
 <div
   class="app-handle flex items-center text-gray-500 px-3 py-3 border-gray-400"
 >
-  <div class="handle__total">
-    {{ length }} {{ length > 1 ? "items" : "item" }}
-  </div>
+  <div class="handle__total">{{ size }} {{ size > 1 ? "items" : "item" }}</div>
 
   <div class="handle__buttons flex-1 flex justify-center">
     <button
@@ -19,7 +17,9 @@
     </button>
   </div>
 
-  <div class="handle__clear">
-    <button class="text-red-400 border-red-400">Clear completed</button>
+  <div class="handle__clear" *ngIf="hasCompleted$ | async">
+    <button class="text-red-400 border-red-400" (click)="onRemoveCompleted()">
+      Clear completed
+    </button>
   </div>
 </div>

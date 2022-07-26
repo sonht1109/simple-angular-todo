@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Todo } from 'src/app/models/todo.model';
 
 @Component({
@@ -8,13 +8,27 @@ import { Todo } from 'src/app/models/todo.model';
 })
 export class ListItemComponent implements OnInit {
   isEditing = false;
-  
-  @Input() todo: Todo | null = null;
+
+  @Input() todo!: Todo;
   @Input() isLast: boolean = false;
+  @Output() handleUpdate = new EventEmitter<Todo>();
+  @Output() handleRemove = new EventEmitter<number>();
 
   onSubmit(event: any) {
     event.preventDefault();
-    console.log(event)
+    this.handleUpdate.emit(this.todo);
+    this.isEditing = false;
+  }
+
+  onUpdateTodoStatus() {
+    this.handleUpdate.emit({
+      ...this.todo,
+      completed: !this.todo.completed,
+    });
+  }
+
+  onRemoveTodo() {
+    this.handleRemove.emit(this.todo.id);
   }
 
   constructor() {}

@@ -4,24 +4,36 @@
 >
   <div class="list__item__checkbox">
     <div
-      class="checkbox--wrapper mr-2 rounded-full flex items-center justify-center cursor-pointer border-gray-400"
+      class="checkbox--wrapper relative mr-2 rounded-full flex items-center justify-center cursor-pointer border-gray-400"
     >
-      <i class="material-icons text-xl text-emerald-500" *ngIf="todo?.completed"
+      <i class="material-icons text-xl text-emerald-500" *ngIf="todo.completed"
         >check</i
       >
+      <input
+        type="checkbox"
+        [id]="todo.id"
+        class="absolute top-0 left-0 right-0 bottom-0 z-10 opacity-0"
+        [checked]="todo.completed"
+        (change)="onUpdateTodoStatus()"
+      />
     </div>
   </div>
 
   <div class="list__item__label relative flex-1 text-gray-500 mr-12">
-    {{ todo?.content }}
+    <label
+      [for]="todo.id"
+      class="cursor-pointer select-none w-full block"
+      [ngClass]="{ 'line-through': todo.completed }"
+      >{{ todo.content }}</label
+    >
     <form
-      (submit)="onSubmit($event)"
+      (keyup.enter)="onSubmit($event)"
       *ngIf="isEditing"
       class="absolute top-0 left-0 right-0 bottom-0"
     >
       <input
+        [(ngModel)]="todo.content"
         name="title"
-        [value]="todo?.content"
         class="border-gray-300 w-full"
         [ngStyle]="{ 'border-width': '1px' }"
       />
@@ -29,14 +41,14 @@
   </div>
 
   <div class="list__item__handle absolute flex items-center">
-    <div class="handle__item">
+    <div class="handle__item" *ngIf="!todo.completed">
       <i
         class="material-icons text-blue-400 text-lg cursor-pointer p-1"
         (click)="isEditing = true"
         >edit</i
       >
     </div>
-    <div class="handle__item">
+    <div class="handle__item" (click)="onRemoveTodo()">
       <i class="material-icons text-red-400 text-lg cursor-pointer p-1"
         >close</i
       >

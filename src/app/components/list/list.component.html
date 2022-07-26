@@ -3,5 +3,7 @@
     *ngFor="let todo of todos; last as isLast"
     [todo]="todo"
     [isLast]="isLast"
+    (handleUpdate)="handleUpdate($event)"
+    (handleRemove)="handleRemove($event)"
   ></app-list-item>
 </div>

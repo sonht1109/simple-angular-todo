@@ -3,6 +3,6 @@
   <div class="app--container max-w-lg m-auto w-full bg-white">
     <app-header></app-header>
     <app-list></app-list>
-    <app-list-handle></app-list-handle>
+    <app-list-handle *ngIf="hasTodo$ | async"></app-list-handle>
   </div>
 </div>

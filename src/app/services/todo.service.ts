@@ -8,15 +8,14 @@ import { StorageService } from './storage.service';
   providedIn: 'root',
 })
 export class TodoService {
-  
-  private readonly storageKey = 'angular.todo';
-  
+  public readonly storageKey = 'angular.todo';
+
   private todos: Todo[] = [];
   private filteredTodos: Todo[] = [];
 
   private todosSubject = new BehaviorSubject<Todo[]>([]);
   private sizeSubject = new BehaviorSubject<number>(0);
-  
+
   private currentFilter = Filter.ALL;
 
   todos$ = this.todosSubject.asObservable();
@@ -30,7 +29,8 @@ export class TodoService {
   }
 
   getFromStorage() {
-    this.todos = this.storageService.getObject(this.storageKey) as Todo[];
+    this.todos =
+      (this.storageService.getObject(this.storageKey) as Todo[]) || [];
     this.filteredTodos = [...this.todos];
     this.updateObserver();
   }
@@ -52,4 +52,41 @@ export class TodoService {
     }
     this.updateObserver();
   }
+
+  updateStorage() {
+    this.storageService.setObject(this.storageKey, this.todos);
+    this.filterTodos(this.currentFilter);
+  }
+
+  addTodo(content: string): boolean {
+    const newTodo = new Todo(Date.now(), content);
+    this.todos.unshift(newTodo);
+    this.updateStorage();
+    return true;
+  }
+
+  updateTodo(todo: Todo) {
+    const index = this.todos.findIndex((t) => t.id === todo.id);
+    if (index !== -1) {
+      this.todos[index] = { ...todo };
+      this.updateStorage();
+    }
+  }
+
+  removeTodo(id: number) {
+    this.todos = this.todos.filter((t) => t.id !== id);
+    this.updateStorage();
+  }
+
+  toggle() {
+    const isAllCompleted = this.todos.every((t) => t.completed);
+    this.todos = this.todos.map((t) => ({ ...t, completed: !isAllCompleted }));
+    this.updateStorage();
+  }
+
+  removeAllCompleted() {
+    this.todos = this.todos.filter((t) => !t.completed);
+    this.updateStorage();
+  }
+
 }
