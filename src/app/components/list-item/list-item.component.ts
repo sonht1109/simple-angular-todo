@@ -8,17 +8,13 @@ import { Todo } from 'src/app/models/todo.model';
 })
 export class ListItemComponent implements OnInit {
   isEditing = false;
-  isHovered = false;
-
+  
   @Input() todo: Todo | null = null;
   @Input() isLast: boolean = false;
 
-  onMouseEnter() {
-    this.isHovered = true;
-  }
-
-  onMouseOut() {
-    this.isHovered = false;
+  onSubmit(event: any) {
+    event.preventDefault();
+    console.log(event)
   }
 
   constructor() {}

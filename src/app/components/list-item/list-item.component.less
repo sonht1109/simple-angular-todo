@@ -9,11 +9,7 @@
     .handle__item {
       pointer-events: none;
       opacity: 0;
-      transition: 0.2s;
-      &.active {
-        pointer-events: all;
-        opacity: 1;
-      }
+      transition: 0.1s;
     }
   }
 
@@ -23,6 +19,13 @@
       width: 24px;
       min-width: 24px;
       height: 24px;
+    }
+  }
+
+  &:hover {
+    .handle__item {
+      pointer-events: all;
+      opacity: 1;
     }
   }
 }

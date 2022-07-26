@@ -1,8 +1,6 @@
 <div
   class="list__item flex items-center relative py-2 px-3 border-gray-300"
   [ngClass]="{ 'is-last': isLast }"
-  (mouseenter)="onMouseEnter()"
-  (mouseout)="onMouseOut()"
 >
   <div class="list__item__checkbox">
     <div
@@ -14,26 +12,31 @@
     </div>
   </div>
 
-  <div class="list__item__label relative flex-1 text-gray-500">
+  <div class="list__item__label relative flex-1 text-gray-500 mr-12">
     {{ todo?.content }}
-    <form *ngIf="isEditing" class="absolute top-0 left-0 right-0 bottom-0">
+    <form
+      (submit)="onSubmit($event)"
+      *ngIf="isEditing"
+      class="absolute top-0 left-0 right-0 bottom-0"
+    >
       <input
+        name="title"
         [value]="todo?.content"
-        class="border-gray-300"
+        class="border-gray-300 w-full"
         [ngStyle]="{ 'border-width': '1px' }"
       />
     </form>
   </div>
 
   <div class="list__item__handle absolute flex items-center">
-    <div class="handle__item" [ngClass]="{ active: isHovered }">
+    <div class="handle__item">
       <i
         class="material-icons text-blue-400 text-lg cursor-pointer p-1"
         (click)="isEditing = true"
         >edit</i
       >
     </div>
-    <div class="handle__item" [ngClass]="{ active: isHovered }">
+    <div class="handle__item">
       <i class="material-icons text-red-400 text-lg cursor-pointer p-1"
         >close</i
       >
